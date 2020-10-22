@@ -9,7 +9,7 @@ namespace XFSample.ViewModels
     {
         public LoginViewModel(INavigation navigation) : base(navigation)
         {
-            LoginCommand = new Command(Login, () => LoginIsEnabled());
+            LoginCommand = new Command(Login, IsEnabledLogin);
         }
 
         private string _email;
@@ -41,10 +41,10 @@ namespace XFSample.ViewModels
             Navigation.PushAsync(new NavigationPage(new MainPage()));
         }
 
-        private bool LoginIsEnabled()
+        private bool IsEnabledLogin()
         {
-            return string.IsNullOrWhiteSpace(Email) &&
-                   string.IsNullOrWhiteSpace(Password);
+            return !string.IsNullOrWhiteSpace(Email) &&
+                   !string.IsNullOrWhiteSpace(Password);
         }
     }
 }
