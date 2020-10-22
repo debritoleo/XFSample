@@ -1,7 +1,5 @@
-﻿using System;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-using XFSamples;
+﻿using Xamarin.Forms;
+using XFSamples.Views;
 
 namespace XFSample
 {
@@ -11,7 +9,7 @@ namespace XFSample
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            MainPage = new LoginPage();
         }
 
         protected override void OnStart()
