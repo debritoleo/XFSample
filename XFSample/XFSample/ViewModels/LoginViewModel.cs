@@ -1,5 +1,7 @@
-﻿using System.Windows.Input;
+﻿using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Forms;
+using XFSample.Services;
 using XFSamples;
 using XFSamples.ViewModels;
 
@@ -9,8 +11,12 @@ namespace XFSample.ViewModels
     {
         public LoginViewModel(INavigation navigation) : base(navigation)
         {
-            LoginCommand = new Command(Login, IsEnabledLogin);
+            LoginCommand = new Command(async () => await Login(), IsEnabledLogin);
+            _loginService = new LoginService();
         }
+
+        private readonly LoginService _loginService;
+        public ICommand LoginCommand { private set; get; }
 
         private string _email;
         public string Email
@@ -34,11 +40,14 @@ namespace XFSample.ViewModels
             }
         }
 
-        public ICommand LoginCommand { private set; get; }
-
-        private void Login()
+        private async Task Login()
         {
-            Navigation.PushAsync(new NavigationPage(new MainPage()));
+            var isValid = await _loginService.EffectLogin(Email, Password);
+
+            if (!isValid)
+                await App.Current.MainPage.DisplayAlert("Atenção", "Não foi possivel efetuar o login", "Cancelar");
+
+            App.Current.MainPage = new NavigationPage(new MainPage());
         }
 
         private bool IsEnabledLogin()
