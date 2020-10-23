@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="XFSample.Views.PersonDetailPage">
+             x:Class="XFSample.Views.PersonDetailPage"
+             Visual="Material">
     
     <StackLayout Margin="5,10,5,10">
         <Frame HasShadow="True"
@@ -61,14 +62,16 @@
             </StackLayout>
         </Frame>
 
-        <Button Text="Salvar"
-                BackgroundColor="Green"
-                TextColor="White"
-                Command="{Binding SaveCommand}"/>
+        <StackLayout Margin="10">
+            <Button Text="Salvar"
+                    BackgroundColor="Green"
+                    Command="{Binding SaveCommand}"
+                    Style="{StaticResource StandardButton}"/>
 
-        <Button Text="Excluir"
-                BackgroundColor="Red"
-                TextColor="White"
-                Command="{Binding DeleteCommand}"/>
+            <Button Text="Excluir"
+                    BackgroundColor="Red"
+                    Command="{Binding DeleteCommand}"
+                    Style="{StaticResource StandardButton}"/>
+        </StackLayout>
     </StackLayout>
 </ContentPage>

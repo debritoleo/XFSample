@@ -3,6 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="XFSample.App">
     <Application.Resources>
+        <Color x:Key="PrimaryColor">#2EAEDD</Color>
 
+        <Style x:Key="StandardButton" TargetType="Button">
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="FontSize" Value="Default"/>
+            <Setter Property="CornerRadius" Value="10"/>
+        </Style>
     </Application.Resources>
 </Application>
