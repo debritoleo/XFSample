@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using XFSample.Helpers;
 using XFSample.Services;
 using XFSamples;
 using XFSamples.ViewModels;
@@ -45,6 +46,8 @@ namespace XFSample.ViewModels
         {
             try
             {
+                await DialogsHelper.ShowLoading("Aguarde");
+
                 var isValid = await _loginService.EffectLogin(Email, Password);
 
                 if (!isValid)
@@ -55,6 +58,10 @@ namespace XFSample.ViewModels
             catch (Exception ex)
             {
                 await App.Current.MainPage.DisplayAlert("Atenção", "Não foi possivel efetuar o login", "Cancelar");
+            }
+            finally
+            {
+                await DialogsHelper.HideLoading();
             }
         }
 
