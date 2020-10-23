@@ -20,9 +20,12 @@ namespace XFSamples.ViewModels
                 new Repository<Person>
                 (Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "People.db3"));
 
+            People = new ObservableCollection<Person>();
+
             RefreshCommand = new Command(async () => await LoadPeople());
             NewPersonCommand = new Command(async () => await OpenPageNewPerson());
-            Task.Run(async () => await LoadPeople());
+
+            LoadPeople();
         }
 
         public ICommand RefreshCommand { private set; get; }
@@ -34,8 +37,15 @@ namespace XFSamples.ViewModels
             try
             {
                 IsBusy = true;
+
+                var peopleBd = await _repository.GetAllAsync();
+
                 People?.Clear();
-                People = new ObservableCollection<Person>(await _repository.GetAllAsync());
+
+                foreach (var person in peopleBd)
+                {
+                    People.Add(person);
+                }
             }
             catch (Exception ex)
             {

@@ -2,11 +2,67 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="XFSample.Views.PersonDetailPage">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
+    <StackLayout Margin="5,10,5,10">
+        <Frame HasShadow="True"
+               Margin="5">
+            <StackLayout Orientation="Vertical">
+                <Label Text="Nome"
+                       FontSize="Small"/>
+
+                <Entry Text="{Binding Name, Mode=TwoWay}" 
+                       Placeholder="Informe seu nome" 
+                       HorizontalOptions="FillAndExpand" 
+                       VerticalOptions="Center" 
+                       Keyboard="Email" 
+                       TextColor="#666666" 
+                       ReturnType="Next"/>
+
+                <Label Text="Telefone"
+                       FontSize="Small"/>
+
+                <Entry Text="{Binding Phone, Mode=TwoWay}" 
+                       Placeholder="Informe seu telefone" 
+                       HorizontalOptions="FillAndExpand" 
+                       VerticalOptions="Center" 
+                       Keyboard="Email" 
+                       TextColor="#666666" 
+                       ReturnType="Next"/>
+
+                <Label Text="Email"
+                       FontSize="Small"/>
+
+                <Entry Text="{Binding Email, Mode=TwoWay}" 
+                       Placeholder="Informe seu email" 
+                       HorizontalOptions="FillAndExpand" 
+                       VerticalOptions="Center" 
+                       Keyboard="Email" 
+                       TextColor="#666666" 
+                       ReturnType="Next"/>
+
+                <Label Text="Senha"
+                       FontSize="Small"/>
+
+                <Entry Text="{Binding Password, Mode=TwoWay}" 
+                       Placeholder="Informe sua senha" 
+                       HorizontalOptions="FillAndExpand" 
+                       VerticalOptions="Center" 
+                       Keyboard="Email" 
+                       TextColor="#666666" 
+                       ReturnType="Next"/>
+
+                <Label Text="Data de nascimento"
+                       FontSize="Small"/>
+
+                <DatePicker 
+                       Date="{Binding DtBirth, Mode=TwoWay}"
+                       HorizontalOptions="FillAndExpand" 
+                       VerticalOptions="Center"/>
+            </StackLayout>
+        </Frame>
+
+        <Button Text="Salvar"
+                BackgroundColor="Green"
+                TextColor="White"
+                Command="{Binding SaveCommand}"/>
+    </StackLayout>
 </ContentPage>

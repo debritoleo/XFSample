@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using XFSample.Services;
@@ -42,12 +43,19 @@ namespace XFSample.ViewModels
 
         private async Task Login()
         {
-            var isValid = await _loginService.EffectLogin(Email, Password);
+            try
+            {
+                var isValid = await _loginService.EffectLogin(Email, Password);
 
-            if (!isValid)
+                if (!isValid)
+                    await App.Current.MainPage.DisplayAlert("Atenção", "Não foi possivel efetuar o login", "Cancelar");
+
+                App.Current.MainPage = new NavigationPage(new MainPage());
+            }
+            catch (Exception ex)
+            {
                 await App.Current.MainPage.DisplayAlert("Atenção", "Não foi possivel efetuar o login", "Cancelar");
-
-            App.Current.MainPage = new NavigationPage(new MainPage());
+            }
         }
 
         private bool IsEnabledLogin()

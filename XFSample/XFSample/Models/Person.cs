@@ -6,6 +6,17 @@ namespace XFSample.Models
 {
     public class Person : IBasicEntity
     {
+        public Person() { }
+
+        public Person(string name, string phone, string email, string password, DateTime dtBirth)
+        {
+            Name = name;
+            Phone = phone;
+            Email = email;
+            Password = password;
+            DtBirth = dtBirth;
+        }
+
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
         public string Name { get; set; }
