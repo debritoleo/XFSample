@@ -12,8 +12,15 @@
     <RefreshView IsRefreshing="{Binding IsBusy}"
                  Command="{Binding RefreshCommand}"
                  VerticalOptions="FillAndExpand">
-        
-        <CollectionView ItemsSource="{Binding People}">
+
+        <CollectionView ItemsSource="{Binding People}" 
+                        SelectionMode="Single"
+                        SelectedItem="{Binding SelectedItem}"
+                        SelectionChangedCommand="{Binding SelectCommand}"
+                        SelectionChangedCommandParameter="{Binding SelectedItem, 
+                                                 Source={x:Reference cltPeople}}"
+                        x:Name="cltPeople">
+
             <CollectionView.EmptyView>
                 <StackLayout>
                     <Label Text="Você ainda não possui registros salvos."

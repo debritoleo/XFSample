@@ -24,13 +24,21 @@ namespace XFSamples.ViewModels
 
             RefreshCommand = new Command(async () => await LoadPeople());
             NewPersonCommand = new Command(async () => await OpenPageNewPerson());
+            SelectCommand = new Command(async () => await OpenPageEditPerson());
 
             LoadPeople();
         }
 
         public ICommand RefreshCommand { private set; get; }
         public ICommand NewPersonCommand { private set; get; }
+        public ICommand SelectCommand { private set; get; }
         public ObservableCollection<Person> People { get; set; }
+        private Person _selected;
+        public Person SelectedItem
+        {
+            get => _selected;
+            set => SetProperty(ref _selected, value);
+        }
 
         private async Task LoadPeople()
         {
@@ -61,6 +69,11 @@ namespace XFSamples.ViewModels
         private async Task OpenPageNewPerson()
         {
             await Navigation.PushAsync(new PersonDetailPage());
+        }
+
+        private async Task OpenPageEditPerson()
+        {
+            await Navigation.PushAsync(new PersonDetailPage(SelectedItem.Id));
         }
     }
 }
