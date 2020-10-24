@@ -43,7 +43,8 @@ namespace XFSample.ViewModels
         public ValidatableObject<string> Name { get; set; } = new ValidatableObject<string>();
         public ValidatableObject<string> PhoneNumber { get; set; } = new ValidatableObject<string>();
         public ValidatableObject<string> Password { get; set; } = new ValidatableObject<string>();
-        public ValidatableObject<DateTime> DtBirth { get; set; } = new ValidatableObject<DateTime>() { Value = DateTime.Today};
+        public ValidatableObject<DateTime> DtBirth { get; set; }
+            = new ValidatableObject<DateTime>() { Value = DateTime.Today };
 
         private void AddValidations()
         {
@@ -54,7 +55,13 @@ namespace XFSample.ViewModels
 
             DtBirth.Validations.Add(new ValidAgeRule<DateTime> { ValidationMessage = "Você deve ter 18 anos ou mais" });
 
-            PhoneNumber.Validations.Add(new IsNotNullOrEmptyRule<string> { ValidationMessage = "o Telefone deve ser preenchido" });
+            PhoneNumber.Validations.Add(new IsNotNullOrEmptyRule<string> { ValidationMessage = "O Telefone deve ser preenchido" });
+            PhoneNumber.Validations.Add(new MinAndMaxValidRule<string>
+            {
+                ValidationMessage = "O número do telefone precisar ter entre 9 e 11 digitos",
+                MinimumLenght = 9,
+                MaximumLenght = 11
+            });
         }
 
         private async Task MapPerson()
