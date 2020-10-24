@@ -1,10 +1,13 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using XFSample.Infra.Data;
 using XFSample.Models;
+using XFSample.Services.Validations.Base;
+using XFSample.Services.Validations.Rules;
 using XFSamples.ViewModels;
 
 namespace XFSample.ViewModels
@@ -20,10 +23,12 @@ namespace XFSample.ViewModels
                 (Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "People.db3"));
 
             _id = id;
-            if (_id > 0){
+            if (_id > 0)
+            {
                 MapPerson();
             }
-
+            Email = new ValidatableObject<string>();
+            AddValidations();
             SaveCommand = new Command(async () => await Save());
             DeleteCommand = new Command(async () => await Delete());
         }
@@ -33,55 +38,63 @@ namespace XFSample.ViewModels
         public ICommand SaveCommand { private set; get; }
         public ICommand DeleteCommand { private set; get; }
 
-        private string _email;
-        public string Email
-        {
-            get => _email;
-            set => SetProperty(ref _email, value);
-        }
+        public ValidatableObject<string> Email { get; set; } = new ValidatableObject<string>();
+        public ValidatableObject<string> Name { get; set; } = new ValidatableObject<string>();
+        public ValidatableObject<string> PhoneNumber { get; set; } = new ValidatableObject<string>();
+        public ValidatableObject<string> Password { get; set; } = new ValidatableObject<string>();
+        public ValidatableObject<DateTime> DtBirth { get; set; } = new ValidatableObject<DateTime>() { Value = DateTime.Today};
 
-        private string _name;
-        public string Name
+        private void AddValidations()
         {
-            get => _name;
-            set => SetProperty(ref _name, value);
-        }
+            Name.Validations.Add(new IsNotNullOrEmptyRule<string> { ValidationMessage = "Obrigatório informar um nome" });
 
-        private string _phone;
-        public string Phone
-        {
-            get => _phone;
-            set => SetProperty(ref _phone, value);
-        }
+            Email.Validations.Add(new IsNotNullOrEmptyRule<string> { ValidationMessage = "O Email deve ser preenchido" });
+            Email.Validations.Add(new IsValidEmailRule<string> { ValidationMessage = "O Email é inválido" });
 
-        private string _password;
-        public string Password
-        {
-            get => _password;
-            set => SetProperty(ref _password, value);
-        }
+            DtBirth.Validations.Add(new ValidAgeRule<DateTime> { ValidationMessage = "Você deve ter 18 anos ou mais" });
 
-        private DateTime _dtBirth;
-        public DateTime DtBirth
-        {
-            get => _dtBirth;
-            set => SetProperty(ref _dtBirth, value);
+            PhoneNumber.Validations.Add(new IsNotNullOrEmptyRule<string> { ValidationMessage = "o Telefone deve ser preenchido" });
         }
 
         private async Task MapPerson()
         {
             _person = await _repository.GetAsync(_id);
 
-            Name = _person.Name;
-            Email = _person.Email;
-            Phone = _person.Phone;
-            DtBirth = _person.DtBirth;
+            Name.Value = _person.Name;
+            Email.Value = _person.Email;
+            PhoneNumber.Value = _person.Phone;
+            DtBirth.Value = _person.DtBirth;
         }
 
         private async Task Save()
         {
-            _person = new Person(Name, Phone, Email, Password, DtBirth);
+            if (!CanSave())
+                return;
+
+            _person = new Person(Name.Value, PhoneNumber.Value, Email.Value, Password.Value, DtBirth.Value);
             await _repository.SaveAsync(_person);
+        }
+
+        private bool CanSave()
+        {
+            var props = this.GetType().GetProperties()
+                                      .Where(x => x.PropertyType.Name == typeof(ValidatableObject<>).Name);
+
+            foreach (var item in props)
+            {
+                if (item != null)
+                {
+                    var validity = item.GetValue(this) as IValidity;
+
+                    if (validity == null)
+                        continue;
+
+                    if (!validity.Validate())
+                        return false;
+                }
+            }
+
+            return true;
         }
 
         private async Task Delete()

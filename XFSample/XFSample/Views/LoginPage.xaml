@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="XFSamples.Views.LoginPage"
              Visual="Material">
-    <ContentPage.Content>
-        <StackLayout VerticalOptions="CenterAndExpand" Margin="30,5,30,5">
+    <StackLayout VerticalOptions="CenterAndExpand" Margin="30,5,30,5">
             <Image Source="https://www.dtidigital.com.br/wp-content/uploads/2017/11/1200px-Xamarin-logo.svg_.png"
                    HeightRequest="100"/>
 
@@ -46,5 +45,4 @@
             </Frame>
 
         </StackLayout>
-    </ContentPage.Content>
 </ContentPage>

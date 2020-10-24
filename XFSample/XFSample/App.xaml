@@ -10,5 +10,14 @@
             <Setter Property="FontSize" Value="Default"/>
             <Setter Property="CornerRadius" Value="10"/>
         </Style>
+
+        <Style TargetType="Entry">
+            <Setter Property="Margin" Value = "0,10,0,0"/>
+        </Style>
+
+        <Style TargetType="Label" x:Key="ErrorTextStyle">
+            <Setter Property="TextColor" Value = "Red"/>
+            <Setter Property="FontSize" Value = "12"/>
+        </Style>
     </Application.Resources>
 </Application>

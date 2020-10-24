@@ -11,7 +11,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="FodyWeavers.xsd" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Acr.UserDialogs" Version="7.1.0.462" />
+    <PackageReference Include="PropertyChanged.Fody" Version="3.2.10" />
     <PackageReference Include="Refit" Version="5.2.1" />
     <PackageReference Include="sqlite-net-pcl" Version="1.7.335" />
     <PackageReference Include="Xamarin.Forms" Version="4.8.0.1560" />
