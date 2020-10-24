@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using XFSample.Helpers;
 using XFSample.Infra.Data;
 using XFSample.Models;
 using XFSample.Services.Validations.Base;
@@ -68,11 +69,25 @@ namespace XFSample.ViewModels
 
         private async Task Save()
         {
-            if (!CanSave())
-                return;
+            try
+            {
+                await DialogsHelper.ShowLoading("Salvando suas informações");
 
-            _person = new Person(Name.Value, PhoneNumber.Value, Email.Value, Password.Value, DtBirth.Value);
-            await _repository.SaveAsync(_person);
+                if (!CanSave())
+                    return;
+
+                _person = new Person(Name.Value, PhoneNumber.Value, Email.Value, Password.Value, DtBirth.Value);
+                await _repository.SaveAsync(_person);
+                await Navigation.PopAsync();
+            }
+            catch
+            {
+                await DialogsHelper.ShowToast("Erro ao salvar suas informações.");
+            }
+            finally
+            {
+                await DialogsHelper.HideLoading();
+            }
         }
 
         private bool CanSave()
@@ -99,8 +114,15 @@ namespace XFSample.ViewModels
 
         private async Task Delete()
         {
-            await _repository.DeleteAsync(_person);
-            await Navigation.PopAsync();
+            try
+            {
+                await _repository.DeleteAsync(_person);
+                await Navigation.PopAsync();
+            }
+            catch
+            {
+                await DialogsHelper.ShowAlert("Atenção", "Não foi possível excluir o registro");
+            }
         }
     }
 }

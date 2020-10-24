@@ -51,13 +51,13 @@ namespace XFSample.ViewModels
                 var isValid = await _loginService.EffectLogin(Email, Password);
 
                 if (!isValid)
-                    await App.Current.MainPage.DisplayAlert("Atenção", "Não foi possivel efetuar o login", "Cancelar");
+                    await DialogsHelper.ShowAlert("Atenção", "Não foi possivel efetuar o login");
 
                 App.Current.MainPage = new NavigationPage(new MainPage());
             }
             catch (Exception ex)
             {
-                await App.Current.MainPage.DisplayAlert("Atenção", "Não foi possivel efetuar o login", "Cancelar");
+                await DialogsHelper.ShowAlert("Atenção", "Não foi possivel efetuar o login");
             }
             finally
             {

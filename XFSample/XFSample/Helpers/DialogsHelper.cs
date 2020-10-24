@@ -12,6 +12,17 @@ namespace XFSample.Helpers
             await Task.Delay(TimeSpan.FromMilliseconds(10));
         }
 
+        public static async Task ShowAlert(string titulo, string message, string okText = "Ok")
+        {
+            await UserDialogs.Instance.AlertAsync(message, titulo, okText);
+        }
+
+        public static async Task ShowToast(string message)
+        {
+            UserDialogs.Instance.Toast(message);
+            await Task.Delay(TimeSpan.FromMilliseconds(10));
+        }
+
         public static async Task HideLoading()
         {
             UserDialogs.Instance.HideLoading();
