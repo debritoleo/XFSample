@@ -20,12 +20,9 @@
                    BackgroundColor="White"
                    Margin="5"
                    Padding="10">
-                <StackLayout Orientation="Vertical">
-                    <Label Text="Nome"
-                           FontSize="Small"/>
-
+                <StackLayout  Orientation="Vertical">
                     <Entry Text="{Binding Name.Value, Mode=TwoWay}" 
-                           Placeholder="Informe seu nome" 
+                           Placeholder="Nome" 
                            HorizontalOptions="FillAndExpand" 
                            VerticalOptions="Center" 
                            ReturnType="Next">
@@ -38,12 +35,9 @@
                            IsVisible="{Binding Name.IsValid, Converter={StaticResource InverseBoolConverter}}"
                            Style="{StaticResource ErrorTextStyle}"/>
 
-                    <Label Text="Telefone"
-                           FontSize="Small"/>
-
                     <Entry 
                            Text="{Binding PhoneNumber.Value, Mode=TwoWay}" 
-                           Placeholder="Informe seu telefone" 
+                           Placeholder="Telefone" 
                            HorizontalOptions="FillAndExpand"                         
                            Keyboard="Telephone" 
                            ReturnType="Next">
@@ -57,11 +51,8 @@
                            IsVisible="{Binding PhoneNumber.IsValid, Converter={StaticResource InverseBoolConverter}}"
                            Style="{StaticResource ErrorTextStyle}"/>
 
-                    <Label Text="Email"
-                           FontSize="Small"/>
-
                     <Entry Text="{Binding Email.Value, Mode=TwoWay}" 
-                           Placeholder="Informe seu email" 
+                           Placeholder="Email" 
                            HorizontalOptions="FillAndExpand" 
                            VerticalOptions="Center" 
                            Keyboard="Email" 
@@ -71,15 +62,12 @@
                         </Entry.Behaviors>
                     </Entry>
 
-                    <Label Text="{Binding Email.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+                <Label Text="{Binding Email.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
                            IsVisible="{Binding Email.IsValid, Converter={StaticResource InverseBoolConverter}}"
                            Style="{StaticResource ErrorTextStyle}"/>
 
-                    <Label Text="Senha"
-                           FontSize="Small"/>
-
-                    <Entry Text="{Binding Password.Value, Mode=TwoWay}" 
-                           Placeholder="Informe sua senha" 
+                <Entry Text="{Binding Password.Value, Mode=TwoWay}" 
+                           Placeholder="Senha" 
                            HorizontalOptions="FillAndExpand" 
                            VerticalOptions="Center" 
                            IsPassword="True" 
@@ -94,7 +82,9 @@
                        Style="{StaticResource ErrorTextStyle}"/>
 
                     <Label Text="Data de nascimento"
-                       FontSize="Small"/>
+                           Margin="15,0,0,0"
+                           TextColor="Black"
+                           FontSize="12"/>
 
                     <DatePicker 
                        Date="{Binding BirthDate.Value, Mode=TwoWay}"

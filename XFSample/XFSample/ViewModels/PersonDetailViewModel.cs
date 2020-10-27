@@ -52,6 +52,8 @@ namespace XFSample.ViewModels
             Email.Validations.Add(new IsNotNullOrEmptyRule<string> { ValidationMessage = "O Email deve ser preenchido" });
             Email.Validations.Add(new IsValidEmailRule<string> { ValidationMessage = "O Email é inválido" });
 
+            Password.Validations.Add(new IsNotNullOrEmptyRule<string> { ValidationMessage = "A Senha deve ser preenchida" });
+
             BirthDate.Validations.Add(new ValidAgeRule<DateTime> { ValidationMessage = "Você deve ter 18 anos ou mais" });
 
             PhoneNumber.Validations.Add(new IsNotNullOrEmptyRule<string> { ValidationMessage = "O Telefone deve ser preenchido" });
