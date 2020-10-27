@@ -47,12 +47,13 @@ namespace XFSamples.ViewModels
 
                 People?.Clear();
 
+                peopleBd = peopleBd.OrderByDescending(x => x.RegistrationDate)
+                                   .ToList();
+
                 foreach (var person in peopleBd)
                 {
                     People.Add(person);
                 }
-
-                People.OrderByDescending(x => x.RegistrationDate);
             }
             catch (Exception ex)
             {
