@@ -1,21 +1,32 @@
 ﻿using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 
-namespace XFSample.Extensions.Controls
+namespace XFSample.Extensions.Behaviours
 {
-    public class MaskedEntry : Entry
+    public class MaskedEntryBehavior : Behavior<Entry>
     {
-        public static readonly BindableProperty MaskProperty =
-            BindableProperty.Create(nameof(Mask), typeof(string), typeof(MaskedEntry), "");
-
+        private string _mask = "";
         public string Mask
         {
-            get => GetValue(MaskProperty).ToString();
-            set => SetValue(MaskProperty, value);
+            get => _mask;
+            set
+            {
+                _mask = value;
+                SetPositions();
+            }
         }
 
-        public MaskedEntry() { }
+        protected override void OnAttachedTo(Entry entry)
+        {
+            entry.TextChanged += OnEntryTextChanged;
+            base.OnAttachedTo(entry);
+        }
+
+        protected override void OnDetachingFrom(Entry entry)
+        {
+            entry.TextChanged -= OnEntryTextChanged;
+            base.OnDetachingFrom(entry);
+        }
 
         IDictionary<int, char> _positions;
 
@@ -44,7 +55,7 @@ namespace XFSample.Extensions.Controls
             if (string.IsNullOrWhiteSpace(text) || _positions == null)
                 return;
 
-            if (text.Length > Mask.Length)
+            if (text.Length > _mask.Length)
             {
                 entry.Text = text.Remove(text.Length - 1);
                 return;
@@ -60,23 +71,6 @@ namespace XFSample.Extensions.Controls
 
             if (entry.Text != text)
                 entry.Text = text;
-        }
-
-        protected override void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            base.OnPropertyChanged(propertyName);
-
-            if (propertyName == MaskProperty.PropertyName)
-            {
-                SetPositions();
-
-                this.TextChanged -= OnEntryTextChanged;
-
-                if (!string.IsNullOrEmpty(Mask))
-                {
-                    this.TextChanged += OnEntryTextChanged;
-                }
-            }
         }
     }
 }
