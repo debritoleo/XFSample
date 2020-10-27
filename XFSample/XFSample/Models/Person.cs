@@ -8,13 +8,17 @@ namespace XFSample.Models
     {
         public Person() { }
 
-        public Person(string name, string phone, string email, string password, DateTime dtBirth)
+        public Person(string name, string phone, string email, string password, DateTime dtBirth, int id = 0)
         {
+            Id = id;
+
             Name = name;
             Phone = phone;
             Email = email;
             Password = password;
-            DtBirth = dtBirth;
+            BirthDate = dtBirth;
+
+            RegistrationDate = DateTime.Now;
         }
 
         [PrimaryKey, AutoIncrement]
@@ -23,6 +27,7 @@ namespace XFSample.Models
         public string Phone { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public DateTime DtBirth { get; set; }
+        public DateTime BirthDate { get; set; }
+        public DateTime RegistrationDate { get; set; }
     }
 }

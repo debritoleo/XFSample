@@ -4,20 +4,27 @@
              x:Class="XFSample.App">
     <Application.Resources>
         <Color x:Key="PrimaryColor">#2EAEDD</Color>
+        <Color x:Key="ColorButtonSuccess">#1DB954</Color>
+        <Color x:Key="ColorButtonDanger">#D54D4D</Color>
+        <Color x:Key="ColorCustomBox">#D3D3D3</Color>
 
+        <Style x:Key="CustomBox" TargetType="BoxView">
+            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+            <Setter Property="HeightRequest" Value="0.5"/>
+            <Setter Property="BackgroundColor" Value="{StaticResource ColorCustomBox}"/>
+        </Style>
+        
         <Style x:Key="StandardButton" TargetType="Button">
             <Setter Property="TextColor" Value="White"/>
             <Setter Property="FontSize" Value="Default"/>
             <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="TextTransform" Value="None"/>
         </Style>
-
-        <Style TargetType="Entry">
-            <Setter Property="Margin" Value = "0,10,0,0"/>
-        </Style>
-
+        
         <Style TargetType="Label" x:Key="ErrorTextStyle">
-            <Setter Property="TextColor" Value = "Red"/>
+            <Setter Property="TextColor" Value = "{StaticResource ColorButtonDanger}"/>
             <Setter Property="FontSize" Value = "12"/>
+            <Setter Property="Margin" Value="5,0,5,0" />
         </Style>
     </Application.Resources>
 </Application>

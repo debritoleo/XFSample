@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -16,17 +17,13 @@ namespace XFSamples.ViewModels
         private readonly IRepository<Person> _repository;
         public MainViewModel(INavigation navigation) : base(navigation)
         {
-            _repository =
-                new Repository<Person>
-                (Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "People.db3"));
+            _repository = new Repository<Person>();
 
             People = new ObservableCollection<Person>();
 
             RefreshCommand = new Command(async () => await LoadPeople());
             NewPersonCommand = new Command(async () => await OpenPageNewPerson());
             SelectCommand = new Command(async () => await OpenPageEditPerson());
-
-            LoadPeople();
         }
 
         public ICommand RefreshCommand { private set; get; }
@@ -40,7 +37,7 @@ namespace XFSamples.ViewModels
             set => SetProperty(ref _selected, value);
         }
 
-        private async Task LoadPeople()
+        public async Task LoadPeople()
         {
             try
             {
@@ -54,6 +51,8 @@ namespace XFSamples.ViewModels
                 {
                     People.Add(person);
                 }
+
+                People.OrderByDescending(x => x.RegistrationDate);
             }
             catch (Exception ex)
             {

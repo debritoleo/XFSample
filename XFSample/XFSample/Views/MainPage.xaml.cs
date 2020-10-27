@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using System.Threading.Tasks;
+using Xamarin.Forms;
 using XFSamples.ViewModels;
 
 namespace XFSamples
@@ -9,6 +10,16 @@ namespace XFSamples
         {
             InitializeComponent();
             BindingContext = new MainViewModel(Navigation);
+        }
+
+        protected override async void OnAppearing()
+        {
+            await LoadPeopleAsync();
+        }
+
+        async Task LoadPeopleAsync()
+        {
+            await ((MainViewModel)BindingContext).LoadPeople();
         }
     }
 }

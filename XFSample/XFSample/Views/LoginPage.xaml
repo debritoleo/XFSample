@@ -2,47 +2,67 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="XFSamples.Views.LoginPage"
+             BackgroundColor="White"
              Visual="Material">
     <StackLayout VerticalOptions="CenterAndExpand" Margin="30,5,30,5">
-            <Image Source="https://www.dtidigital.com.br/wp-content/uploads/2017/11/1200px-Xamarin-logo.svg_.png"
-                   HeightRequest="100"/>
+        <Image Source="https://www.dtidigital.com.br/wp-content/uploads/2017/11/1200px-Xamarin-logo.svg_.png"
+               HeightRequest="100"/>
 
-            <Frame CornerRadius="20"
-                   HasShadow="True">
-                <StackLayout>
-                    <StackLayout Orientation="Vertical">
-                        <Label Text="Email"
-                               FontSize="Small"/>
+        <Frame CornerRadius="20"
+               HasShadow="True" 
+               BorderColor="#D3D3D3">
+            <StackLayout>
+                <StackLayout Orientation="Vertical">
+                    <Label Text="Email"
+                           FontSize="Small"/>
 
-                        <Entry Text="{Binding Email, Mode=TwoWay}" 
-                               Placeholder="Informe seu email" 
-                               HorizontalOptions="FillAndExpand" 
-                               VerticalOptions="Center" 
-                               Keyboard="Email" 
-                               TextColor="#666666" 
-                               ReturnType="Next"/>
-                    </StackLayout>
-
-                    <StackLayout Orientation="Vertical">
-                        <Label Text="Senha"
-                               FontSize="Small"/>
-
-                        <Entry Text="{Binding Password, Mode=TwoWay}"
-                               Placeholder="Informe sua senha" 
-                               HorizontalOptions="FillAndExpand" 
-                               VerticalOptions="Center" 
-                               IsPassword="True"
-                               ReturnType="Go" 
-                               TextColor="#666666"/>
-                    </StackLayout>
-
-                    <Button Text="Entrar"
-                            Command="{Binding LoginCommand}"
-                            BackgroundColor="{StaticResource PrimaryColor}"
-                            Style="{StaticResource StandardButton}"/>
-
+                    <Entry Text="{Binding Email, Mode=TwoWay}" 
+                           Placeholder="Informe seu email" 
+                           HorizontalOptions="FillAndExpand" 
+                           VerticalOptions="Center" 
+                           Keyboard="Email" 
+                           ReturnType="Next"/>
                 </StackLayout>
-            </Frame>
 
-        </StackLayout>
+                <StackLayout Orientation="Vertical">
+                    <Label Text="Senha"
+                           FontSize="Small"/>
+
+                    <Entry Text="{Binding Password, Mode=TwoWay}"
+                           Placeholder="Informe sua senha" 
+                           HorizontalOptions="FillAndExpand" 
+                           VerticalOptions="Center" 
+                           IsPassword="True"
+                           ReturnType="Go"/>
+                </StackLayout>
+
+                <Button Text="Entrar"
+                        Margin="0,10,0,10"
+                        Command="{Binding LoginCommand}"
+                        BackgroundColor="{StaticResource PrimaryColor}"
+                        Style="{StaticResource StandardButton}"/>
+
+
+                <Frame CornerRadius="20"    
+                       HasShadow="False"
+                       Margin="5,10,5,0"
+                       Padding="5"
+                       BackgroundColor="{StaticResource ColorButtonDanger}">
+                    <Frame.Triggers>
+                        <DataTrigger 
+                             TargetType="Frame"
+                             Binding="{Binding ErrorMessage, TargetNullValue=''}"
+                             Value="">
+                            <Setter Property="IsVisible" Value="False"/>
+                        </DataTrigger>
+                    </Frame.Triggers>
+                    <Label Text="{Binding ErrorMessage}"
+                       HorizontalTextAlignment="Center"
+                       FontSize="Small"
+                       TextColor="White"/>
+                </Frame>
+            </StackLayout>
+        </Frame>
+
+    </StackLayout>
 </ContentPage>

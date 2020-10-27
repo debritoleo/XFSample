@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using XFSample.Helpers;
 using XFSample.Services;
+using XFSample.Services.Validations.Rules;
 using XFSamples;
 using XFSamples.ViewModels;
 
@@ -19,6 +21,8 @@ namespace XFSample.ViewModels
 
         private readonly LoginService _loginService;
         public ICommand LoginCommand { private set; get; }
+
+        public string ErrorMessage { get; set; }
 
         private string _email;
         public string Email
@@ -46,6 +50,8 @@ namespace XFSample.ViewModels
         {
             try
             {
+                if (!Validate()) return;
+
                 await DialogsHelper.ShowLoading("Aguarde");
 
                 var isValid = await _loginService.EffectLogin(Email, Password);
@@ -69,6 +75,16 @@ namespace XFSample.ViewModels
         {
             return !string.IsNullOrWhiteSpace(Email) &&
                    !string.IsNullOrWhiteSpace(Password);
+        }
+
+        private bool Validate()
+        {
+            var ruleMail = new IsValidEmailRule<string>() { ValidationMessage = "O Email é inválido" };
+            if (ruleMail.Check(Email))
+                return true;
+
+            ErrorMessage = ruleMail.ValidationMessage;
+            return false;
         }
     }
 }

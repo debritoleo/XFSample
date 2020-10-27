@@ -23,6 +23,11 @@ namespace XFSample.Helpers
             await Task.Delay(TimeSpan.FromMilliseconds(10));
         }
 
+        public static async Task<bool> ShowConfirm(string title, string message)
+        {
+            return await UserDialogs.Instance.ConfirmAsync(message, title, "Ok", "Cancelar");
+        }
+
         public static async Task HideLoading()
         {
             UserDialogs.Instance.HideLoading();
