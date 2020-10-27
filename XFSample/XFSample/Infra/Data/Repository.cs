@@ -1,5 +1,7 @@
 ﻿using SQLite;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using XFSample.Interfaces;
 using XFSample.Models;
@@ -9,9 +11,12 @@ namespace XFSample.Infra.Data
     public class Repository<T> : IRepository<T> where T : class, IBasicEntity, new()
     {
         private readonly SQLiteAsyncConnection _sqliteConnection;
-        public Repository(string dbPath)
+        private static readonly string _dbPath 
+            = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "People.db3");
+
+        public Repository()
         {
-            _sqliteConnection = new SQLiteAsyncConnection(dbPath);
+            _sqliteConnection = new SQLiteAsyncConnection(_dbPath);
             _sqliteConnection.CreateTableAsync<Person>().GetAwaiter().GetResult();
         }
 
